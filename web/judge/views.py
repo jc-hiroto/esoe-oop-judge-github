@@ -32,6 +32,7 @@ def index(request):
                   {'github_account': config.GITHUB_ACCOUNT,
                    'sample_problem': sample_problem})
 
+
 def login(request):
     # users should not be able to log in again if they're already logged in
     if request.user.is_authenticated():
@@ -41,6 +42,7 @@ def login(request):
     else:
         return auth_views.login(request, template_name='judge/login.html')
 
+
 def logout(request):
     # users should not be able to log out if they're not logged in yet
     if not request.user.is_authenticated():
@@ -49,6 +51,7 @@ def logout(request):
         return HttpResponseRedirect(reverse('judge:index'))
     else:
         return auth_views.logout(request, next_page='judge:index')
+
 
 @login_required
 def problem_list(request):
@@ -69,6 +72,7 @@ def problem_list(request):
     return render(request,
                   'judge/problem_list.html',
                   {'problem_info_list': problem_info_list})
+
 
 @login_required
 def problem_detail(request, pk):
@@ -129,6 +133,7 @@ def problem_detail(request, pk):
                    'submitted_file_info_list': submitted_file_info_list,
                    'provided_file_info_list': provided_file_info_list})
 
+
 @login_required
 def profile(request):
     user = request.user
@@ -136,20 +141,20 @@ def profile(request):
 
     # unbound forms to be used later
     unbound_update_github_form = ProfileUpdateGithubForm(instance=profile,
-                                                               initial={'github_account':
-                                                                        profile.github_account,
-                                                                        'github_repository':
-                                                                        profile.github_repository})
+                                                         initial={'github_account':
+                                                                  profile.github_account,
+                                                                  'github_repository':
+                                                                  profile.github_repository})
     unbound_password_change_form = PasswordChangeForm(user=user)
 
     # handle forms
     if request.method == 'POST':
         update_github_form = ProfileUpdateGithubForm(data=request.POST,
-                                                           instance=profile,
-                                                           initial={'github_account':
-                                                                    profile.github_account,
-                                                                    'github_repository':
-                                                                    profile.github_repository})
+                                                     instance=profile,
+                                                     initial={'github_account':
+                                                              profile.github_account,
+                                                              'github_repository':
+                                                              profile.github_repository})
         password_change_form = PasswordChangeForm(data=request.POST, user=user)
 
         # for it to be regarded as successful (such that the user gets
@@ -165,7 +170,7 @@ def profile(request):
                 n_undone_forms -= 1
 
                 messages.success(request,
-                                'Github settings successfully updated.')
+                                 'GitHub settings successfully updated.')
         else:
             update_github_form = unbound_update_github_form
 
@@ -175,7 +180,7 @@ def profile(request):
                 n_undone_forms -= 1
 
                 messages.success(request,
-                                'Password successfully changed. Please log in again.')
+                                 'Password successfully changed. Please log in again.')
         else:
             password_change_form = unbound_password_change_form
 
@@ -190,6 +195,7 @@ def profile(request):
                   {'profile': profile,
                    'update_github_form': update_github_form,
                    'password_change_form': password_change_form})
+
 
 @login_required
 def submission_detail(request, pk):

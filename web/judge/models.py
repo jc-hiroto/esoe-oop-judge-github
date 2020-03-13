@@ -27,6 +27,7 @@ class Problem(models.Model):
     class Meta:
         ordering = ['pk']
 
+
 class RequiredFile(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
 
@@ -46,17 +47,18 @@ class RequiredFile(models.Model):
     class Meta:
         ordering = ['problem__pk', 'via', 'filename']
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     name = models.CharField(max_length=32)
 
     github_account = models.CharField(max_length=32,
+                                      blank=True,
+                                      validators=[validate_slug])
+    github_repository = models.CharField(max_length=32,
                                          blank=True,
                                          validators=[validate_slug])
-    github_repository = models.CharField(max_length=32,
-                                            blank=True,
-                                            validators=[validate_slug])
 
     solved_problems = models.ManyToManyField(Problem,
                                              related_name='solved_profiles',
@@ -71,6 +73,7 @@ class Profile(models.Model):
 
     class Meta:
         ordering = ['user__username']
+
 
 class Submission(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
