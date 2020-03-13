@@ -1,0 +1,79 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>ESOE OOP Judge [GitHub edition]</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'judge/css/base.css' %}">
+    {% block css %}
+    {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {% block js %}
+    {% endblock %}
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-custom navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'judge:index' %}">ESOE OOP Judge  [GitHub edition]</a>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'judge:problem_list' %}">Problems</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'judge:profile' %}"><span class="glyphicon glyphicon-user"></span> {{ user.username }}</a></li>
+            <li><a href="{% url 'judge:logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-offset-1 col-sm-10">
+            {% if messages %}
+            <div id="messages-div">
+              {% for message in messages %}
+              <div class="alert {{ message.tags }} alert-dismissible fade in">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container-fluid">
+        <h6 class="text-center">
+          Developed by Hao-Ying Liang (梁浩穎) and Wei-Cheng Li (李蔚成).<br>
+          Modified by <a target="_blank" href="https://github.com/jc-hiroto">jc-hiroto</a> (張博皓) and <a target="_blank" href="https://github.com/Tetrapod1206">Tetrapod1206</a> (蕭博瀚).
+          / Special thanks to 108-2 OOP course TA Wang-Ting (王婷) for assistance.<br>
+          Credits to <a target="_blank" href="http://ada2015.csie.org">ADA2015</a> for inspiration.
+        <h6>
+      </div>
+    </footer>
+  </body>
+</html>

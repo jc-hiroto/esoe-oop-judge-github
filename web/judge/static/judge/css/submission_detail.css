@@ -1,0 +1,31 @@
+.table {
+    width: 100%;
+}
+.table .table-column-id {
+    width: 10%;
+    text-align: center;
+}
+.table .table-column-problem {
+    width: 25%;
+    text-align: center;
+}
+.table .table-column-status {
+    width: 40%;
+    text-align: center;
+}
+.table .table-column-datetime {
+    width: 25%;
+    text-align: center;
+}
+
+#detailed-messages {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+}
+
+#submitted-files .panel .panel-body {
+    padding-top: 0;
+    padding-bottom: 0;
+}

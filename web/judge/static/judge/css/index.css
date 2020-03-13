@@ -1,0 +1,19 @@
+#guidelines {
+    padding: 20px 25px;
+    box-shadow: 5px 5px 20px #53829e;
+    border-radius: 10px;
+}
+#guidelines ol {
+    margin-bottom: 0;
+    padding-left: 35px;
+}
+#guidelines ol li {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+#guidelines .alert {
+    margin-top: 15px;
+    margin-bottom: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}

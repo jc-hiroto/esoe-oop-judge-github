@@ -1,0 +1,70 @@
+{% extends 'judge/base.html' %}
+
+{% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeEclipse.min.css">
+<link rel="stylesheet" href="{% static 'judge/css/submission_detail.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJava.min.js"></script>
+<script>
+  SyntaxHighlighter.defaults.toolbar = false;
+  SyntaxHighlighter.all();
+</script>
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Submission #{{ submission.pk }}</h2>
+
+<h3>Basic Information</h3>
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="table-column-id">ID</th>
+        <th class="table-column-problem">Problem</th>
+        <th class="table-column-status">Status</th>
+        <th class="table-column-datetime">Datetime</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="table-column-id">{{ submission.pk }}</td>
+        <td class="table-column-problem"><a href="{% url 'judge:problem_detail' submission.problem.pk %}">{{ submission.problem.title }}</a></td>
+        <td class="table-column-status">{{ submission.get_status_display }}</td>
+        <td class="table-column-datetime">{{ submission.submission_datetime }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% if submission.detailed_messages %}
+<h3>Detailed Messages</h3>
+<div id="detailed-messages">
+  {{ submission.detailed_messages|safe|linebreaks }}
+  {% if submission.detailed_messages_stderr %}
+  <pre><code>{{ submission.detailed_messages_stderr }}</code></pre>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if submitted_file_info_list %}
+<h3>Submitted Files</h3>
+<div id="submitted-files">
+  <div class="panel panel-info">
+    {% for submitted_file_info in submitted_file_info_list %}
+    <div class="panel-heading">
+      <tt class="panel-title">{{ submitted_file_info.filename }}</tt>
+    </div>
+    <div class="panel-body">
+      <pre class="brush: java">{{ submitted_file_info.content }}</pre>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

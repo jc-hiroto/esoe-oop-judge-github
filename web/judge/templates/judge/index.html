@@ -1,0 +1,62 @@
+{% extends 'judge/base.html' %}
+
+{% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'judge/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="guidelines">
+  <h2>How to submit?</h2>
+  <ol>
+    <li>
+      Register an account at
+      <a target="_blank" href="https://github.com">GitHub</a>.
+    </li>
+    <li>
+      Create a new private repository for this course.
+    </li>
+    <li>
+      Add the account<code>{{ github_account }}</code> as a collaborator in your repository Settings -> Manage access.
+    </li>
+    <li>
+      Set up the GitHub settings in
+      <a href="{% url 'judge:profile' %}">your profile</a>.
+    </li>
+    <li>
+      Clone the repository into whatever place you like
+      (<code>git clone</code>).
+    </li>
+    <li>
+      In the directory you just cloned, create another directory named
+      <code>{{ sample_problem.pk }}</code>, which is the problem ID of
+      <a href={% url 'judge:problem_detail' pk=sample_problem.pk %}>{{ sample_problem.title }}</a>.
+    </li>
+    <li>
+      Add all required files marked submitted in
+      <a href={% url 'judge:problem_detail' pk=sample_problem.pk %}>{{ sample_problem.title }}</a>
+      into <code>{{ sample_problem.pk }}</code> (with your solutions included,
+      of course).
+    </li>
+    <li>
+      Commit and push
+      (<code>git add</code>, <code>git commit</code>, and then <code>git push</code>).
+    </li>
+    <li>
+      Click the submit button in
+      <a href={% url 'judge:problem_detail' pk=sample_problem.pk %}>{{ sample_problem.title }}</a>.
+    </li>
+    <li>
+      See if there are any errors; if so, then go back to debug and try it again
+      when you are done.
+    </li>
+  </ol>
+  <div class="alert alert-warning">
+    Here, we use
+    <a href={% url 'judge:problem_detail' pk=sample_problem.pk %}>{{ sample_problem.title }}</a>
+    as sample. Do not forget to make corresponding changes when you are solving
+    other problems.
+  </div>
+</div>
+{% endblock %}
