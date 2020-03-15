@@ -1,7 +1,7 @@
 import os
 import sys
 import subprocess
-
+import invitation
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 import config
 
@@ -168,9 +168,11 @@ def profile(request):
             if update_github_form.is_valid():
                 update_github_form.save()
                 n_undone_forms -= 1
-
-                messages.success(request,
+                if(accept_invitation(update_github_form.get('github_repository')) == True):
+                    messages.success(request,
                                  'GitHub settings successfully updated.')
+                else:
+                    messages.error(request,'Please try again after you add the OOP JUDGE GitHub account as a collaborator of your repository.')
         else:
             update_github_form = unbound_update_github_form
 
